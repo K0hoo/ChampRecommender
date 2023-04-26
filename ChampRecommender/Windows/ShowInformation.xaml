@@ -10,6 +10,16 @@
       Title="ShowInformation">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Path=GameWindowHeight}"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="660"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Path=GameWindowWidth}"/>
+            <ColumnDefinition Width="1270"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>        
     </Grid>
 </Window>

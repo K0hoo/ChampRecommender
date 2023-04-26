@@ -11,10 +11,14 @@ namespace ChampRecommender.Models
 {
     public static class GameManager
     {
+        public enum GaemType {searching = 0, classic = 1, others = 2};
+
         private static int gameWindowX = 0;
         private static int gameWindowY = 0;
 
-        private static ShowInformation mShowInformation;
+        private static ShowInformation? mShowInformation;
+
+        public static bool logicExit = false;
         public static async void LogicStart(ShowInformation showInfomation)
         {
             showInfomation.Hide();
@@ -26,7 +30,9 @@ namespace ChampRecommender.Models
             }
             mShowInformation = showInfomation;
             
-            await 
+            await CheckStartGame();
+
+            if (FileControl.Aut)
         }
 
         private static async Task CheckStartGame()

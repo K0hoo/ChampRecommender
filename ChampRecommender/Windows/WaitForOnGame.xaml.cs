@@ -26,7 +26,9 @@ namespace ChampRecommender.Windows
             {
                 if (GetProcessStatus.FindGameOnProcess())
                 {
-                
+                    GameManager.LogicStart(new ShowInformation());
+                    Close();
+                    return;
                 }
                 await Task.Delay(1000 * 10);
             }

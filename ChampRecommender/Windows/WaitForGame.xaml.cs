@@ -10,25 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ChampRecommender.Windows
 {
     /// <summary>
-    /// ShowInformation.xaml에 대한 상호 작용 논리
+    /// WaitForGame.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ShowInformation : Window
+    public partial class WaitForGame : Window
     {
-
-        public bool ThisWindowClose { get; set; } = false;
-
-        private ShowInformationViewModel viewModel;
-        public ShowInformation()
+        public WaitForGame()
         {
             InitializeComponent();
-            Topmost = true;
-
         }
     }
 }
