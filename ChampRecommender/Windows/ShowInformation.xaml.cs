@@ -23,7 +23,7 @@ namespace ChampRecommender.Windows
 
         public bool ThisWindowClose { get; set; } = false;
 
-        private ShowInformationViewModel viewModel;
+        // private ShowInformationViewModel viewModel;
         public ShowInformation()
         {
             InitializeComponent();

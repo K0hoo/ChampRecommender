@@ -30,14 +30,10 @@ namespace ChampRecommender.Models
             }
             mShowInformation = showInfomation;
             
-            await CheckStartGame();
+           
 
-            if (FileControl.Aut)
+  
         }
-
-        private static async Task CheckStartGame()
-        {
-            gameType = ()
-        }
+       
     }
 }

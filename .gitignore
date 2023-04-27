@@ -1,1 +1,9 @@
 .vs
+Backup
+*.ipynb
+*.htm
+*.json
+*.csproj
+*.csproj.user
+bin
+obj

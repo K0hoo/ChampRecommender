@@ -1,16 +1,70 @@
-﻿<Window x:Class="ChampRecommender.Windows.WaitForOnGame"
+﻿<Page x:Class="ChampRecommender.Windows.WaitForGame"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ChampRecommender.Windows"
-      WindowStyle="None"
-      Background="{x:Null}"
-      mc:Ignorable="d"
-      Title="WaitForOnGame" Height="1" Width="1"
-      Loaded="WaitForFame">
+      mc:Ignorable="d" 
+      d:DesignHeight="560" d:DesignWidth="400"
+      Title="WaitForGame">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Grid.ColumnSpan="2147483647"
+            x:Name="row_0"
+            >
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Windows/Malphite_0.jpg"/>
+            </StackPanel.Background>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            Grid.ColumnSpan="2147483647"
+            x:Name="row_1"
+            >
+            <StackPanel.Background>
+                <ImageBrush/>
+            </StackPanel.Background>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Grid.ColumnSpan="2147483647"
+            x:Name="row_2"
+            >
+            <StackPanel.Background>
+                <ImageBrush/>
+            </StackPanel.Background>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Grid.ColumnSpan="2147483647"
+            x:Name="row_3"
+            >
+            <StackPanel.Background>
+                <ImageBrush/>
+            </StackPanel.Background>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="4"
+            Grid.ColumnSpan="2147483647"
+            x:Name="row_4"
+            >
+            <StackPanel.Background>
+                <ImageBrush/>
+            </StackPanel.Background>
+        </StackPanel>
     </Grid>
-</Window>
+</Page>

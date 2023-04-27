@@ -15,7 +15,7 @@ namespace ChampRecommender.ViewModel
         public showInformationViewModel()
         {
             viewModelObject = this;
-            if (Lo)
+            //if (Lo)
         }
     }
 }
