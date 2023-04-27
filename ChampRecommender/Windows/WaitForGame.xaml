@@ -27,7 +27,7 @@
             x:Name="row_0"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Malphite_0.jpg"/>
+                <ImageBrush ImageSource="/Windows/Xayah_0.jpg"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -36,7 +36,7 @@
             x:Name="row_1"
             >
             <StackPanel.Background>
-                <ImageBrush/>
+                <ImageBrush ImageSource="/Windows/Jinx_0.jpg"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -45,7 +45,7 @@
             x:Name="row_2"
             >
             <StackPanel.Background>
-                <ImageBrush />
+                <ImageBrush ImageSource="/Windows/Zeri_0.jpg" />
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -54,7 +54,7 @@
             x:Name="row_3"
             >
             <StackPanel.Background>
-                <ImageBrush/>
+                <ImageBrush ImageSource="/Windows/Varus_0.jpg"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -63,8 +63,16 @@
             x:Name="row_4"
             >
             <StackPanel.Background>
-                <ImageBrush/>
+                <ImageBrush ImageSource="/Windows/Kaisa_0.jpg"/>
             </StackPanel.Background>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="5"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Source="/Windows/ps_bot.png" 
+                   Width="100" Height="100" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Center" />
         </StackPanel>
     </Grid>
 </Page>
