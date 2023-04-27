@@ -44,5 +44,17 @@ namespace ChampRecommender.Windows
         {
 
         }
+
+        private void ChangeContent(object sender, RoutedEventArgs e)
+        {
+            if (this.MainContent is System.Windows.Controls.Frame)
+            {
+                this.MainContent.Content = new WaitForGame();
+            }
+            else
+            {
+                this.MainContent.Content = new System.Windows.Controls.Frame();
+            }
+        }
     }
 }

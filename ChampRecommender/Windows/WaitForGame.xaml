@@ -45,7 +45,7 @@
             x:Name="row_2"
             >
             <StackPanel.Background>
-                <ImageBrush/>
+                <ImageBrush />
             </StackPanel.Background>
         </StackPanel>
         <StackPanel

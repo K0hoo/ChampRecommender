@@ -24,5 +24,10 @@ namespace ChampRecommender.Windows
         {
             InitializeComponent();
         }
+
+        private void showPage()
+        {
+            showPage();
+        }
     }
 }
