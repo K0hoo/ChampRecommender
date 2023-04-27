@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using ChampRecommender.ViewModel;
 
 namespace ChampRecommender.Windows
 {
@@ -20,14 +21,27 @@ namespace ChampRecommender.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        ClientViewModel clientViewModel;
+        RecommendViewModel recommendViewModel;
+
         public MainWindow()
         {
+            clientViewModel = new ClientViewModel();
             InitializeComponent();
         }
 
-        public async void ClassicGameOn(object o, EventArgs e)
+        public async void ClientOnCheck(object o, EventArgs e)
         {
-            await Task.Delay(1000 * 10);
+            while (true)
+            {
+                if (clientViewModel.CheckClientOn())
+                {
+                    clientViewModel.Connect();
+                    this.DataContext = recommendViewModel = new RecommendViewModel();
+                    return;
+                }
+                await Task.Delay(1000 * 10);
+            }
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -40,16 +54,11 @@ namespace ChampRecommender.Windows
             Close();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ChangeContent(object sender, RoutedEventArgs e)
         {
             if (this.MainContent is System.Windows.Controls.Frame)
             {
-                this.MainContent.Content = new WaitForGame();
+                this.MainContent.Content = new ChampRecommend();
             }
             else
             {
