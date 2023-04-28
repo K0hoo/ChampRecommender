@@ -8,9 +8,9 @@ namespace ChampRecommender.Models
 {
     class Summoner
     {
-        public string accountId { get; set; }
+        public string AccountId { get; set; }
 
-        public string summonerId { get; set; }
+        public string SummonerId { get; set; }
 
         public string puuid { get; set; }
 

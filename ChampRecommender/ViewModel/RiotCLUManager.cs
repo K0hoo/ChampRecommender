@@ -17,14 +17,14 @@ namespace ChampRecommender.ViewModel
 
         static public HttpClient httpClient = null;
 
-        static public async Task<Object> UsingApiEventJObject(string method, string endpoint, object data=null)
+        static public async Task<JObject> UsingApiEventJObject(string method, string endpoint, object data=null)
         {
-            var response = await UsingApiEventHttpMessage(method, endpoint, data);
-            var responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
+            HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
+            JObject responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             return responseJson;
         }
 
-        static public async Task<HttpResponseMessage> UsingApiEventHttpMessage(string method, string endpoint, object data=null)
+        static private async Task<HttpResponseMessage> UsingApiEventHttpMessage(string method, string endpoint, object data=null)
         {
             var json = data == null ? "" : JsonConvert.SerializeObject(data);
 

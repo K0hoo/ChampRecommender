@@ -9,6 +9,7 @@ using System.Diagnostics;
 using ChampRecommender.Models;
 using System.Net.Http.Headers;
 using System.Windows.Input;
+using System.IO;
 
 namespace ChampRecommender.ViewModel
 {
@@ -26,6 +27,19 @@ namespace ChampRecommender.ViewModel
         {
             try
             {
+                ClientData.LeaguePath = Path.GetDirectoryName(ClientData.clientProcess.MainModule.FileName);
+                var lockFilePath = Path.Combine(ClientData.LeaguePath, "lockfile");
+
+                using (var fileStream =  new FileStream(lockFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var reader = new StreamReader(fileStream))
+                {
+                    var text = reader.ReadToEnd();
+                    string[] items = text.Split(':');
+                    ClientData.ToKen = items[3];
+                    ClientData.Port = ushort.Parse(items[2]);
+                    ClientData.ApiUrl = "https://127.0.0.1:" + ClientData.Port.ToString() + "/";
+                }
+
                 ConnectInit();
 
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

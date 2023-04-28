@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Windows\Garen_0.jpg" />
+    <None Remove="Windows\Gwen_0.jpg" />
+    <None Remove="Windows\Jinx_0.jpg" />
+    <None Remove="Windows\Kaisa_0.jpg" />
+    <None Remove="Windows\Malphite_0.jpg" />
+    <None Remove="Windows\MSI23_Announcement_Header_57.png" />
+    <None Remove="Windows\Neeko_0.jpg" />
+    <None Remove="Windows\ps_bot.png" />
+    <None Remove="Windows\Rengar_0.jpg" />
+    <None Remove="Windows\RiotX_ChampionList_galio.jpg" />
+    <None Remove="Windows\Ryze_0.jpg" />
+    <None Remove="Windows\Varus_0.jpg" />
+    <None Remove="Windows\Xayah_0.jpg" />
+    <None Remove="Windows\Zeri_0.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Windows\Garen_0.jpg" />
+    <Resource Include="Windows\Gwen_0.jpg" />
+    <Resource Include="Windows\Jinx_0.jpg" />
+    <Resource Include="Windows\Kaisa_0.jpg" />
+    <Resource Include="Windows\MSI23_Announcement_Header_57.png" />
+    <Resource Include="Windows\Neeko_0.jpg" />
+    <Resource Include="Windows\ps_bot.png" />
+    <Resource Include="Windows\Rengar_0.jpg" />
+    <Resource Include="Windows\Ryze_0.jpg" />
+    <Resource Include="Windows\Varus_0.jpg" />
+    <Resource Include="Windows\Xayah_0.jpg" />
+    <Resource Include="Windows\Zeri_0.jpg" />
+  </ItemGroup>
+
+</Project>

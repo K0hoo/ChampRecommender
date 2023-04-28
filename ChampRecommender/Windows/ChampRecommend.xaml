@@ -74,5 +74,13 @@
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center" />
         </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >
+            <TextBlock 
+                Text="60%" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="GhostWhite" FontWeight="Black" FontSize="45"
+                />
+        </StackPanel>
     </Grid>
 </Page>
