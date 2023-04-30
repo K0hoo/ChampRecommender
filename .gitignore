@@ -1,6 +1,6 @@
 .vs
 Backup
-*.ipynb
+Selenium.ipynb
 *.htm
 *.json
 bin
