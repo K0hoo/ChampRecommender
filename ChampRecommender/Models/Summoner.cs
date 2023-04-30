@@ -8,20 +8,20 @@ namespace ChampRecommender.Models
 {
     class Summoner
     {
-        public string AccountId { get; set; }
+        public string? AccountId { get; set; }
 
-        public string SummonerId { get; set; }
+        public string? SummonerId { get; set; }
 
-        public string puuid { get; set; }
+        public string? puuid { get; set; }
 
-        public string Name { get; set; }    
+        public string? Name { get; set; }    
 
-        public Lane MainLane { get; set; }
+        public string? MainLane { get; set; }
 
-        public List<Champion> Availablechamp { get; set; }
+        public List<Champion>? Availablechamp { get; set; }
 
-        public Tier Tier { get; set; }
+        public Tier? Tier { get; set; }
 
-        public int SubTier { get; set; }
+        public int? SubTier { get; set; }
     }
 }

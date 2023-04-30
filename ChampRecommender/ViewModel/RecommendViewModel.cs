@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChampRecommender.Dataset;
 using ChampRecommender.Models;
 using ChampRecommender.Windows;
 using Newtonsoft.Json;
@@ -20,13 +21,24 @@ namespace ChampRecommender.ViewModel
         {
             try
             {
-                JObject summonerJson = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CURRENT_SUMMONER);
+                JObject? summonerJson = null;
+                while (true)
+                {
+                    summonerJson = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CURRENT_SUMMONER);
+                    if (summonerJson != null) break;
+                    await Task.Delay(1000 * 10);
+                }
                 string accountId = summonerJson["accountId"].ToString();
                 string summonerId = summonerJson["summonerId"].ToString();
                 string puuid = summonerJson["puuid"].ToString();
                 string name = summonerJson["displayName"].ToString();
+
                 JObject tierInfo = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CURRENT_SUMMONER_TIER(puuid));
-                var soloRankTierInfo = tierInfo["queueMap"]["RANKED_SOLO_5x5"];
+                JToken soloRankTierInfo = tierInfo["queueMap"]["RANKED_SOLO_5x5"];
+                string tier = soloRankTierInfo["tier"].ToString();
+                string subtier = soloRankTierInfo["division"].ToString();
+
+                gameStatics.initGameStatics(puuid);
             }
             catch (Exception ex)
             {

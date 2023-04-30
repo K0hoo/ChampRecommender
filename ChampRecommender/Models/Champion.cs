@@ -7,16 +7,13 @@ using System.Windows.Controls;
 
 namespace ChampRecommender.Models
 {
-    class Champion
+    public class Champion
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Name { get; }
+        public string? Name { get; set; }
 
-        // Top: 0 ,Jungle: 1, Mid: 2, AD: 3, Support: 4
-        public int Position { get; }
-
-        public Image Image { get; }
+        public List<string>? Lanes { get; set; }
 
     }
 }

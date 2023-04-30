@@ -20,12 +20,17 @@ namespace ChampRecommender.Models
         CHALLENGER
     }
     
-    public enum Lane
+    public static class Lane
     {
-        TOP,
-        jUNGLE,
-        MID,
-        AD,
-        SUPPORT
+        public const string TOP = "TOP";
+        public const string JUNGLE = "JUNGLE";
+        public const string MID = "MID";
+        public const string BOTTOM = "BOTTOM";
+        public const string SUPPORT = "SUPPORT";
+    }
+
+    public enum LaneE
+    {
+        TOP, JUNGLE, MID, BOTTOM, SUPPORT
     }
 }

@@ -15,16 +15,23 @@ namespace ChampRecommender.ViewModel
     static class RiotCLUManager
     {
 
-        static public HttpClient httpClient = null;
+        static public HttpClient? httpClient = null;
 
-        static public async Task<JObject> UsingApiEventJObject(string method, string endpoint, object data=null)
+        static public async Task<JObject> UsingApiEventJObject(string method, string endpoint, object? data=null)
         {
             HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
             JObject responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
             return responseJson;
         }
 
-        static private async Task<HttpResponseMessage> UsingApiEventHttpMessage(string method, string endpoint, object data=null)
+        static public async Task<JArray> UsingApiEventJArray(string method, string endpoint, object? data=null)
+        {
+            HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
+            JArray responseJsonArray = JArray.Parse(await response.Content.ReadAsStringAsync());
+            return responseJsonArray;
+        }
+
+        static private async Task<HttpResponseMessage> UsingApiEventHttpMessage(string method, string endpoint, object? data=null)
         {
             var json = data == null ? "" : JsonConvert.SerializeObject(data);
 

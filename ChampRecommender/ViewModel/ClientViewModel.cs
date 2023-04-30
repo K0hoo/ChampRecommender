@@ -10,6 +10,7 @@ using ChampRecommender.Models;
 using System.Net.Http.Headers;
 using System.Windows.Input;
 using System.IO;
+using ChampRecommender.Dataset;
 
 namespace ChampRecommender.ViewModel
 {
@@ -17,10 +18,11 @@ namespace ChampRecommender.ViewModel
     {
         public delegate void LeagueClosedHandler();
         public event LeagueClosedHandler LeagueClosed;
-        private HttpClient httpClient = null;
+        private HttpClient? httpClient = null;
         
         public ClientViewModel() 
         {
+            Champions.initChampions();
         }
 
         public void Connect()
