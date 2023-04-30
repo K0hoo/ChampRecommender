@@ -2,6 +2,7 @@
 Backup
 Selenium.ipynb
 *.htm
-*.json
 bin
 obj
+dev_data
+jsonex
