@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ChampRecommender.Dataset;
+using ChampRecommender.Models;
+using ChampRecommender.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +24,23 @@ namespace ChampRecommender.Windows
     /// </summary>
     public partial class ChampRecommend : Page
     {
+
+        RecommendViewModel recommendViewModel;
+
+        public List<ChampionStatics>? championStatics;
         public ChampRecommend()
         {
             InitializeComponent();
+
+            this.DataContext = recommendViewModel = new RecommendViewModel();
+
+            initChampRecommend();
+        }
+
+        private async void initChampRecommend()
+        {
+            await recommendViewModel.setSummoner();
+            championStatics = gameStatics.GetChampionStatics();
         }
     }
 }

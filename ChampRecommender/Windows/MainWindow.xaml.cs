@@ -37,7 +37,8 @@ namespace ChampRecommender.Windows
                 if (clientViewModel.CheckClientOn())
                 {
                     clientViewModel.Connect();
-                    this.DataContext = recommendViewModel = new RecommendViewModel();
+                    this.MainContent.Content = new ChampRecommend();
+                    // this.DataContext = recommendViewModel = new RecommendViewModel();
                     return;
                 }
                 await Task.Delay(1000 * 10);

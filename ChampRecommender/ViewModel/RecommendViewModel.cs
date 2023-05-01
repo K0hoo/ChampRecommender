@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using ChampRecommender.Dataset;
 using ChampRecommender.Models;
 using ChampRecommender.Windows;
@@ -17,16 +19,16 @@ namespace ChampRecommender.ViewModel
 
         public Summoner? getSummoner() { return _summoner; }
 
-        public async void setSummoner()
+        public async Task setSummoner()
         {
             try
             {
-                JObject? summonerJson = null;
+                JObject? summonerJson;
                 while (true)
                 {
                     summonerJson = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CURRENT_SUMMONER);
-                    if (summonerJson != null) break;
-                    await Task.Delay(1000 * 10);
+                    if (summonerJson != null && summonerJson.ContainsKey("accountId")) break;
+                    await Task.Delay(1000);
                 }
                 string accountId = summonerJson["accountId"].ToString();
                 string summonerId = summonerJson["summonerId"].ToString();
@@ -38,7 +40,17 @@ namespace ChampRecommender.ViewModel
                 string tier = soloRankTierInfo["tier"].ToString();
                 string subtier = soloRankTierInfo["division"].ToString();
 
-                gameStatics.initGameStatics(puuid);
+                await gameStatics.initGameStatics(puuid);
+
+                _summoner = new Summoner
+                {
+                    AccountId = accountId,
+                    SummonerId = summonerId,
+                    puuid = puuid,
+                    Name = name,
+                    Tier = tier,
+                    SubTier = subtier == "None" ? -1 : Convert.ToInt32(subtier)
+                };
             }
             catch (Exception ex)
             {
@@ -59,12 +71,16 @@ namespace ChampRecommender.ViewModel
             }
         }
 
-        private ChampRecommend _champRecommend = new ChampRecommend();
+        private ChampRecommend? _champRecommend;
         private Summoner? _summoner;
 
         public RecommendViewModel()
         {
-            setSummoner();
+        }
+
+        public async Task initRecommendViewModel()
+        {
+            await setSummoner();
         }
     }
 }

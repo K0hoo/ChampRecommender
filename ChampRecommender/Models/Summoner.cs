@@ -16,11 +16,7 @@ namespace ChampRecommender.Models
 
         public string? Name { get; set; }    
 
-        public string? MainLane { get; set; }
-
-        public List<Champion>? Availablechamp { get; set; }
-
-        public Tier? Tier { get; set; }
+        public string? Tier { get; set; }
 
         public int? SubTier { get; set; }
     }
