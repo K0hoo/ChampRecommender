@@ -18,7 +18,13 @@ namespace ChampRecommender.Dataset
         
         static private int gameCount;
 
+        static private int winCount;
+
+        static private int winRate;
+
         static private int season;
+
+        static private string? mostLane = "None";
 
         static private List<ChampionStatics> champStats;
 
@@ -34,11 +40,40 @@ namespace ChampRecommender.Dataset
             classifiedGames.Add(new List<JObject>());
             checkedChampions.Add(0);
 
+            int[] laneCount = { 0, 0, 0, 0, 0};
+
             foreach (var game in games)
             {
                 if (game["queueType"].ToString() == rankGame)
                 {
                     gameCount++;
+
+                    if ((int)game["stats"]["CareerStats.js"]["victory"] != 0)
+                    {
+                        winCount++;
+                    }
+
+                    switch (game["lane"].ToString())
+                    {
+                        case "TOP":
+                            laneCount[0]++;
+                            break;
+                        case "JUNGLE":
+                            laneCount[1]++;
+                            break;
+                        case "MID":
+                            laneCount[2]++;
+                            break;
+                        case "BOTTOM":
+                            laneCount[3]++;
+                            break;
+                        case "SUPPORT":
+                            laneCount[4]++;
+                            break;
+                        default:
+                            break;
+                    }
+
                     season = (int)game["season"];
                     int champId = (int)game["championId"];
                     List<JObject> curList;
@@ -59,6 +94,27 @@ namespace ChampRecommender.Dataset
                     classifiedGames[0].Add(game.ToObject<JObject>());
                 }
             }
+
+            int laneMax = laneCount.Max();
+            int laneIdx = Array.IndexOf(laneCount, laneMax);
+
+            switch (laneIdx)
+            {
+                case 0:
+                    mostLane = Lane.TOP; break;
+                case 1:
+                    mostLane = Lane.JUNGLE; break;
+                case 2:
+                    mostLane = Lane.MID; break; 
+                case 3:
+                    mostLane = Lane.BOTTOM; break;
+                case 4:
+                    mostLane = Lane.SUPPORT; break;
+                default: break;
+            }
+
+            winRate = winCount * 100 / gameCount;
+
             int lenList = checkedChampions.Count;
             champStats = new List<ChampionStatics>(lenList);
             for (int i = 1; i < lenList; i++)
@@ -71,6 +127,14 @@ namespace ChampRecommender.Dataset
         }
 
         public static List<ChampionStatics> GetChampionStatics() { return champStats; }
+
+        public static int GetWinRate() { return winRate; }
+
+        public static int GetGameCount() { return gameCount; }
+
+        public static int GetWinCount() {  return winCount; }
+
+        public static string? GetMostLane() { return mostLane; }
     }
 
     public class ChampionStatics

@@ -27,7 +27,7 @@
             x:Name="row_0"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Xayah_0.jpg"/>
+                <ImageBrush ImageSource="{Binding champ0Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -36,7 +36,7 @@
             x:Name="row_1"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Jinx_0.jpg"/>
+                <ImageBrush ImageSource="{Binding champ1Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -45,7 +45,7 @@
             x:Name="row_2"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Zeri_0.jpg" />
+                <ImageBrush ImageSource="{Binding champ2Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -54,7 +54,7 @@
             x:Name="row_3"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Varus_0.jpg"/>
+                <ImageBrush ImageSource="{Binding champ3Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
@@ -63,23 +63,29 @@
             x:Name="row_4"
             >
             <StackPanel.Background>
-                <ImageBrush ImageSource="/Windows/Kaisa_0.jpg"/>
+                <ImageBrush ImageSource="{Binding champ4Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel.Background>
         </StackPanel>
         <StackPanel
             Grid.Row="5"
             Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Source="/Windows/ps_bot.png" 
+            <Image Source="{Binding mostLaneImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                    Width="100" Height="100" 
-                   HorizontalAlignment="Left" 
+                   HorizontalAlignment="Center" 
                    VerticalAlignment="Center" />
+            <TextBlock 
+                Text="{Binding mostLane, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Foreground="#C8AA6E" FontWeight="Heavy" FontSize="20"
+                />
         </StackPanel>
         <StackPanel
             Grid.Row="0" Grid.Column="0" x:Name="r0c0"
             VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBlock 
                 Text="{Binding champ0Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="36" Margin="20,0,0,0"
+                VerticalAlignment="Center" HorizontalAlignment="Left" 
                 />
         </StackPanel>
         <StackPanel
@@ -87,6 +93,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBlock 
                 Text="{Binding champ1Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="36" Margin="20,0,0,0"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 />
         </StackPanel>
@@ -95,6 +102,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBlock 
                 Text="{Binding champ2Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="36" Margin="20,0,0,0"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 />
         </StackPanel>
@@ -103,6 +111,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBlock 
                 Text="{Binding champ3Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="36" Margin="20,0,0,0"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 />
         </StackPanel>
@@ -111,6 +120,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBlock 
                 Text="{Binding champ4Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="36" Margin="20,0,0,0"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 />
         </StackPanel>
@@ -119,7 +129,95 @@
             Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
             >
             <TextBlock 
-                Text="60%" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="GhostWhite" FontWeight="Black" FontSize="45"
+                Text="{Binding champ0WinRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+            <TextBlock 
+                Text="{Binding champ0Played, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="15"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >
+            <TextBlock 
+                Text="{Binding champ1WinRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+            <TextBlock 
+                Text="{Binding champ1Played, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="15"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >
+            <TextBlock 
+                Text="{Binding champ2WinRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+            <TextBlock 
+                Text="{Binding champ2Played, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="15"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >
+            <TextBlock 
+                Text="{Binding champ3WinRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+            <TextBlock 
+                Text="{Binding champ3Played, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="15"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="4"
+            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >
+            <TextBlock 
+                Text="{Binding champ4WinRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="40"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+            <TextBlock 
+                Text="{Binding champ4Played, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="15"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="5" Grid.Column="0"
+            VerticalAlignment="Center" HorizontalAlignment="Left"
+            >
+            <TextBlock 
+                Text="{Binding summonerName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="30"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"
+                />
+            <TextBlock 
+                Text="{Binding winRate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="20"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"
+                />
+            <TextBlock 
+                Text="{Binding tier, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="FloralWhite" FontWeight="Heavy" FontSize="20"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"
                 />
         </StackPanel>
     </Grid>
