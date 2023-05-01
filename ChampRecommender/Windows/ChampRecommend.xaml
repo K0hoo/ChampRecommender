@@ -75,6 +75,46 @@
                    VerticalAlignment="Center" />
         </StackPanel>
         <StackPanel
+            Grid.Row="0" Grid.Column="0" x:Name="r0c0"
+            VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock 
+                Text="{Binding champ0Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1" Grid.Column="0" x:Name="r1c0"
+            VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock 
+                Text="{Binding champ1Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2" Grid.Column="0" x:Name="r2c0"
+            VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock 
+                Text="{Binding champ2Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3" Grid.Column="0" x:Name="r3c0"
+            VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock 
+                Text="{Binding champ3Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="4" Grid.Column="0" x:Name="r4c0"
+            VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock 
+                Text="{Binding champ4Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                />
+        </StackPanel>
+        <StackPanel
             Grid.Row="0"
             Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
             >

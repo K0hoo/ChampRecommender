@@ -3,6 +3,7 @@ using ChampRecommender.Models;
 using ChampRecommender.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -40,7 +41,7 @@ namespace ChampRecommender.Windows
         private async void initChampRecommend()
         {
             await recommendViewModel.setSummoner();
-            championStatics = gameStatics.GetChampionStatics();
+            await recommendViewModel.SetMostChampion();
         }
     }
 }

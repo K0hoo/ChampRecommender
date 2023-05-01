@@ -22,7 +22,6 @@ namespace ChampRecommender.Windows
     public partial class MainWindow : Window
     {
         ClientViewModel clientViewModel;
-        RecommendViewModel recommendViewModel;
 
         public MainWindow()
         {
@@ -53,18 +52,6 @@ namespace ChampRecommender.Windows
         private void CloseWindow(object o, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void ChangeContent(object sender, RoutedEventArgs e)
-        {
-            if (this.MainContent is System.Windows.Controls.Frame)
-            {
-                this.MainContent.Content = new ChampRecommend();
-            }
-            else
-            {
-                this.MainContent.Content = new System.Windows.Controls.Frame();
-            }
         }
     }
 }
