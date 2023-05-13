@@ -76,7 +76,7 @@
     <None Remove="Windows\crop_champion\Irelia_0.jpg" />
     <None Remove="Windows\crop_champion\Ivern_0.jpg" />
     <None Remove="Windows\crop_champion\Janna_0.jpg" />
-    <None Remove="Windows\crop_champion\JarvanIV_0.jpg" />
+    <None Remove="Windows\crop_champion\Jarvan IV_0.jpg" />
     <None Remove="Windows\crop_champion\Jax_0.jpg" />
     <None Remove="Windows\crop_champion\Jayce_0.jpg" />
     <None Remove="Windows\crop_champion\Jhin_0.jpg" />
@@ -96,7 +96,7 @@
     <None Remove="Windows\crop_champion\KogMaw_0.jpg" />
     <None Remove="Windows\crop_champion\KSante_0.jpg" />
     <None Remove="Windows\crop_champion\Leblanc_0.jpg" />
-    <None Remove="Windows\crop_champion\LeeSin_0.jpg" />
+    <None Remove="Windows\crop_champion\Lee Sin_0.jpg" />
     <None Remove="Windows\crop_champion\Leona_0.jpg" />
     <None Remove="Windows\crop_champion\Lillia_0.jpg" />
     <None Remove="Windows\crop_champion\Lissandra_0.jpg" />
@@ -403,7 +403,7 @@
     <Resource Include="Windows\crop_champion\Irelia_0.jpg" />
     <Resource Include="Windows\crop_champion\Ivern_0.jpg" />
     <Resource Include="Windows\crop_champion\Janna_0.jpg" />
-    <Resource Include="Windows\crop_champion\JarvanIV_0.jpg" />
+    <Resource Include="Windows\crop_champion\Jarvan IV_0.jpg" />
     <Resource Include="Windows\crop_champion\Jax_0.jpg" />
     <Resource Include="Windows\crop_champion\Jayce_0.jpg" />
     <Resource Include="Windows\crop_champion\Jhin_0.jpg" />
@@ -423,7 +423,7 @@
     <Resource Include="Windows\crop_champion\KogMaw_0.jpg" />
     <Resource Include="Windows\crop_champion\KSante_0.jpg" />
     <Resource Include="Windows\crop_champion\Leblanc_0.jpg" />
-    <Resource Include="Windows\crop_champion\LeeSin_0.jpg" />
+    <Resource Include="Windows\crop_champion\Lee Sin_0.jpg" />
     <Resource Include="Windows\crop_champion\Leona_0.jpg" />
     <Resource Include="Windows\crop_champion\Lillia_0.jpg" />
     <Resource Include="Windows\crop_champion\Lissandra_0.jpg" />

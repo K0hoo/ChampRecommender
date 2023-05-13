@@ -40,8 +40,11 @@ namespace ChampRecommender.Windows
 
         private async void initChampRecommend()
         {
+            await recommendViewModel.initRecommendViewModel();
+            /*
             await recommendViewModel.setSummoner();
             await recommendViewModel.SetMostChampion();
+            */
         }
     }
 }

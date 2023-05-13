@@ -19,13 +19,14 @@ namespace ChampRecommender.ViewModel
         public delegate void LeagueClosedHandler();
         public event LeagueClosedHandler LeagueClosed;
         private HttpClient? httpClient = null;
+        private HttpClient? httpServer = null;
         
         public ClientViewModel() 
         {
             Champions.initChampions();
         }
 
-        public void Connect()
+        public async Task Connect()
         {
             try
             {
@@ -42,7 +43,7 @@ namespace ChampRecommender.ViewModel
                     ClientData.ApiUrl = "https://127.0.0.1:" + ClientData.Port.ToString() + "/";
                 }
 
-                ConnectInit();
+                ClientConnectInit();
 
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
@@ -54,6 +55,13 @@ namespace ChampRecommender.ViewModel
                 ClientData.clientProcess.Exited += ClientProcess_Exited;
 
                 RiotCLUManager.httpClient = httpClient;
+
+                ServerConnectInit();
+
+                httpServer.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpServer.BaseAddress = new Uri(ServerData.ServerUrl);
+
+                ServerManager.httpServer = httpServer;
             }
             catch 
             {
@@ -61,7 +69,7 @@ namespace ChampRecommender.ViewModel
             }
         }
 
-        private void ConnectInit()
+        private void ClientConnectInit()
         {
             this.httpClient = null;
             var handler = new HttpClientHandler();
@@ -69,6 +77,16 @@ namespace ChampRecommender.ViewModel
             handler.ServerCertificateCustomValidationCallback =
                 (HttpResponseMessage, cert, cetChain, policyErrors) => { return true; };
             httpClient = new HttpClient(handler);
+        }
+
+        public void ServerConnectInit()
+        {
+            this.httpServer = null;
+            var handler = new HttpClientHandler();
+            handler.ClientCertificateOptions= ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (HttpResponseMessage, cert, cetChain, policyErrors) => { return true; };
+            httpServer = new HttpClient(handler);
         }
 
         public bool CheckClientOn()

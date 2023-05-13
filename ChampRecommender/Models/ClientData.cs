@@ -19,4 +19,11 @@ namespace ChampRecommender.Models
         // 게임 프로세스
         public static Process? gameClientProcess = null;
     }
+
+    class ServerData
+    {
+        public static string? ServerUrl = null;
+
+        public static ushort? Port = null;
+    }
 }

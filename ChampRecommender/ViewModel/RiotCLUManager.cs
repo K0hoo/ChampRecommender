@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace ChampRecommender.ViewModel
 {
@@ -17,18 +18,32 @@ namespace ChampRecommender.ViewModel
 
         static public HttpClient? httpClient = null;
 
-        static public async Task<JObject> UsingApiEventJObject(string method, string endpoint, object? data=null)
+        static public async Task<JObject>? UsingApiEventJObject(string method, string endpoint, object? data=null)
         {
-            HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
-            JObject responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
-            return responseJson;
+            try
+            {
+                HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
+                JObject responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
+                return responseJson;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
-        static public async Task<JArray> UsingApiEventJArray(string method, string endpoint, object? data=null)
+        static public async Task<JArray>? UsingApiEventJArray(string method, string endpoint, object? data=null)
         {
-            HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
-            JArray responseJsonArray = JArray.Parse(await response.Content.ReadAsStringAsync());
-            return responseJsonArray;
+            try
+            {
+                HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
+                JArray responseJsonArray = JArray.Parse(await response.Content.ReadAsStringAsync());
+                return responseJsonArray;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         static private async Task<HttpResponseMessage> UsingApiEventHttpMessage(string method, string endpoint, object? data=null)
@@ -48,6 +63,20 @@ namespace ChampRecommender.ViewModel
                 default:
                     throw new Exception("Unsupported Http method.");
             }
+        }
+    }
+
+    static class ServerManager
+    {
+        static public HttpClient? httpServer = null;
+
+        public static async Task<JArray> getRecommendation(object? data)
+        {
+            var json = data == null ? "" : JsonConvert.SerializeObject(data);
+
+            HttpResponseMessage response = await httpServer.PostAsync("", new StringContent(json, Encoding.UTF8, "application/json"));
+            JArray responseJson = JArray.Parse(await response.Content.ReadAsStringAsync());
+            return responseJson;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.SymbolStore;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
@@ -13,11 +14,13 @@ using ChampRecommender.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V110.Network;
 
 namespace ChampRecommender.ViewModel
 {
     internal class RecommendViewModel : BaseViewModel
     {
+        public HttpClient? httpServer { get; set; }
 
         public Summoner? getSummoner() { return _summoner; }
 
@@ -32,6 +35,7 @@ namespace ChampRecommender.ViewModel
                     if (summonerJson != null && summonerJson.ContainsKey("accountId")) break;
                     await Task.Delay(1000);
                 }
+                // Debug.Assert(summonerJson != null);
                 string accountId = summonerJson["accountId"].ToString();
                 string summonerId = summonerJson["summonerId"].ToString();
                 string puuid = summonerJson["puuid"].ToString();
@@ -445,9 +449,11 @@ namespace ChampRecommender.ViewModel
         public async Task initRecommendViewModel()
         {
             await setSummoner();
+            await setMostChampion();
+            await checkBanPick();
         }
 
-        public async Task SetMostChampion()
+        private async Task setMostChampion()
         {
             if (_summoner != null) 
             {
@@ -464,29 +470,169 @@ namespace ChampRecommender.ViewModel
                 mostLaneImage = String.Format("/Windows/l_{0}.png", gameStatics.GetMostLane());
                 mostLane = gameStatics.GetMostLane();
 
-                champ0Name = championStatics[0].GetChampion().Name;
-                champ1Name = championStatics[1].GetChampion().Name;
-                champ2Name = championStatics[2].GetChampion().Name;
-                champ3Name = championStatics[3].GetChampion().Name;
-                champ4Name = championStatics[4].GetChampion().Name;
+                if (championStatics.Count > 0)
+                {
+                    champ0Name = championStatics[0].GetChampion().Name;
+                    champ0WinRate = championStatics[0].getWinRate().ToString();
+                    champ0Played = championStatics[0].getCount().ToString();
+                    champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
+                }
 
-                champ0WinRate = championStatics[0].getWinRate().ToString();
-                champ1WinRate = championStatics[1].getWinRate().ToString();
-                champ2WinRate = championStatics[2].getWinRate().ToString();
-                champ3WinRate = championStatics[3].getWinRate().ToString();
-                champ4WinRate = championStatics[4].getWinRate().ToString();
+                if (championStatics.Count > 1)
+                {
+                    champ1Name = championStatics[1].GetChampion().Name;
+                    champ1WinRate = championStatics[1].getWinRate().ToString();
+                    champ1Played = championStatics[1].getCount().ToString();
+                    champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
+                }
 
-                champ0Played = championStatics[0].getCount().ToString();
-                champ1Played = championStatics[1].getCount().ToString();
-                champ2Played = championStatics[2].getCount().ToString();
-                champ3Played = championStatics[3].getCount().ToString();
-                champ4Played = championStatics[4].getCount().ToString();
+                if (championStatics.Count > 2)
+                {
+                    champ2Name = championStatics[2].GetChampion().Name;
+                    champ2WinRate = championStatics[2].getWinRate().ToString();
+                    champ2Played = championStatics[2].getCount().ToString();
+                    champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
+                }
 
-                champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
-                champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
-                champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
-                champ3Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ3Name);
-                champ4Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ4Name);
+                if (championStatics.Count > 3)
+                {
+                    champ3Name = championStatics[3].GetChampion().Name;
+                    champ3WinRate = championStatics[3].getWinRate().ToString();
+                    champ3Played = championStatics[3].getCount().ToString();
+                    champ3Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ3Name);
+                }
+
+                if (championStatics.Count > 4)
+                {
+                    champ4Name = championStatics[4].GetChampion().Name;
+                    champ4WinRate = championStatics[4].getWinRate().ToString();
+                    champ4Played = championStatics[4].getCount().ToString();
+                    champ4Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ4Name);
+                }
+            }
+        }
+
+        private async Task checkBanPick()
+        {
+            try
+            {
+                JObject? banPickInfo = null;
+                JObject currentChamp = JObject.Parse(@"{
+                    'myTeam': {
+                        'top': 0,
+                        'jungle': 0,
+                        'middle': 0,
+                        'bottom': 0,
+                        'utility': 0
+                    },
+                    'theirTeam': [0, 0, 0, 0, 0]
+                }");
+
+                while (true)
+                {
+                    banPickInfo = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CHAMP_SELECT_SESSION);
+                    if (banPickInfo != null && !banPickInfo.ContainsKey("errorCode"))
+                    {
+                        bool changed = false;
+                        JArray? myTeam = (JArray?)banPickInfo["myTeam"];
+                        JArray? theirTeam = (JArray?)banPickInfo["theirTeam"];
+                        JArray? actions = (JArray?)banPickInfo["actions"];
+                        JArray? banPhase = (JArray?)actions[0];
+                        JArray? pickPhase = new JArray();
+                        foreach(JArray pp in actions)
+                        {
+                            foreach (JObject p in pp) { 
+                                if (p["type"].ToString() == "pick") {
+                                    pickPhase.Add(p);
+                                }
+                            }
+                        }
+                        
+                        if (myTeam != null)
+                        {
+                            foreach (var item in myTeam.Select((value, index) => (value, index)))
+                            {
+                                int index = item.index;
+                                var cell = item.value;
+                                string? curChamp = currentChamp["myTeam"][cell["assignedPosition"]].ToString();
+                                string? newChamp = cell["championId"].ToString();
+                                if (curChamp != newChamp && pickPhase[index]["completed"].ToString() == "true")
+                                {
+                                    currentChamp["myTeam"][cell["assignedPosition"]] = Convert.ToInt32(newChamp);
+                                    changed = true;
+                                }
+                            }
+                        }
+
+                        if (theirTeam != null)
+                        {
+                            foreach(var item in theirTeam.Select((value, index) => (value, index)))
+                            {
+                                int index = item.index;
+                                int cellNum = index + 5;
+                                var cell = item.value;
+                                string? curChamp = ((JArray?)currentChamp["theirTeam"])[index].ToString();
+                                string? newChamp = cell["championId"].ToString();
+                                if (curChamp != newChamp && pickPhase[cellNum]["completed"].ToString() == "true")
+                                {
+                                    currentChamp["theirTeam"][index] = Convert.ToInt32(newChamp);
+                                    changed = true;
+                                }
+                            }
+                        }
+
+                        if (changed)
+                        {
+                            JArray recommendation = await ServerManager.getRecommendation(currentChamp);
+                            setRecommendation(recommendation);
+                        }
+                    }
+                    await Task.Delay(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error");
+            }
+        }
+
+        private void setRecommendation(JArray recommendations)
+        {
+            foreach(var item in recommendations.Select((value, index) => (value, index)))
+            {
+                int index = item.index;
+                var recommendation = item.value;
+                Champion? champ = Champions.GetChampionById(Convert.ToInt32(recommendation["champ"]));
+                if (champ != null)
+                {
+                    if (index == 0)
+                    {
+                        champ0Name = champ.Name;
+                        champ0WinRate = recommendation["winRate"].ToString();
+                        champ0Played = "";
+                        champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
+                    } else if (index == 1) {
+                        champ1Name = champ.Name;
+                        champ1WinRate = recommendation["winRate"].ToString();
+                        champ1Played = "";
+                        champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
+                    } else if (index == 2) {
+                        champ2Name = champ.Name;
+                        champ2WinRate = recommendation["winRate"].ToString();
+                        champ2Played = "";
+                        champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
+                    } else if (index == 3) {
+                        champ3Name = champ.Name;
+                        champ3WinRate = recommendation["winRate"].ToString();
+                        champ3Played = "";
+                        champ3Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ3Name);
+                    } else if (index == 4) {
+                        champ4Name = champ.Name;
+                        champ4WinRate = recommendation["winRate"].ToString();
+                        champ4Played = "";
+                        champ4Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ4Name);
+                    }
+                }
             }
         }
     }

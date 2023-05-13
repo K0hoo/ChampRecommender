@@ -35,12 +35,12 @@ namespace ChampRecommender.Windows
             {
                 if (clientViewModel.CheckClientOn())
                 {
-                    clientViewModel.Connect();
+                    await clientViewModel.Connect();
                     this.MainContent.Content = new ChampRecommend();
                     // this.DataContext = recommendViewModel = new RecommendViewModel();
                     return;
                 }
-                await Task.Delay(1000 * 10);
+                await Task.Delay(1000);
             }
         }
 
