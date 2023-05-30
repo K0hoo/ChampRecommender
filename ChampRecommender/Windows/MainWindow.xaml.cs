@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Shell;
 using ChampRecommender.ViewModel;
+using Newtonsoft.Json.Linq;
 
 namespace ChampRecommender.Windows
 {
@@ -52,6 +53,11 @@ namespace ChampRecommender.Windows
         private void CloseWindow(object o, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void MainContent_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
         }
     }
 }

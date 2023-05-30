@@ -1,9 +1,11 @@
 ﻿using ChampRecommender.Dataset;
 using ChampRecommender.Models;
 using ChampRecommender.ViewModel;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -45,6 +47,22 @@ namespace ChampRecommender.Windows
             await recommendViewModel.setSummoner();
             await recommendViewModel.SetMostChampion();
             */
+        }
+
+        private async void communicateTest(object sender, RoutedEventArgs e)
+        {
+            JObject currentChamp = JObject.Parse(@"{
+                    'myTeam': {
+                        'top': 0,
+                        'jungle': 0,
+                        'middle': 0,
+                        'bottom': 0,
+                        'utility': 0
+                    },
+                    'theirTeam': [0, 0, 0, 0, 0]
+                }");
+            JArray result = await ServerManager.getRecommendation(currentChamp);
+            Trace.WriteLine(result.ToString());
         }
     }
 }

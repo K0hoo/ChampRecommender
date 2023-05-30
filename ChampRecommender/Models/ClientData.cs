@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Security.Cryptography.Pkcs;
+using static System.Net.WebRequestMethods;
 
 namespace ChampRecommender.Models
 {
@@ -22,8 +23,6 @@ namespace ChampRecommender.Models
 
     class ServerData
     {
-        public static string? ServerUrl = null;
-
-        public static ushort? Port = null;
+        public static string ServerUrl = "https://mobilex.kr/ai/dev/team12/post_test";
     }
 }

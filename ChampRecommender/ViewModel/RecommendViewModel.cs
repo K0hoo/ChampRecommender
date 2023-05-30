@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.SymbolStore;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -287,7 +288,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ0Played != value)
                 {
-                    _champ0Played = value + " played";
+                    if (value == "") _champ0Played = value;
+                    else _champ0Played = value + " played";
                     NotifyPropertyChanged();
                 }
             }
@@ -300,7 +302,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ1Played != value)
                 {
-                    _champ1Played = value + " played";
+                    if (value == "") _champ1Played = value;
+                    else _champ1Played = value + " played";
                     NotifyPropertyChanged();
                 }
             }
@@ -312,7 +315,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ2Played != value)
                 {
-                    _champ2Played = value + " played";
+                    if (value == "") _champ2Played = value;
+                    else _champ2Played = value + " played";
                     NotifyPropertyChanged();
                 }
             }
@@ -325,7 +329,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ3Played != value)
                 {
-                    _champ3Played = value + " played";
+                    if (value == "") _champ3Played = value;
+                    else _champ3Played = value + " played";
                     NotifyPropertyChanged();
                 }
             }
@@ -338,7 +343,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ4Played != value)
                 {
-                    _champ4Played = value + " played";
+                    if (value == "") _champ4Played = value;
+                    else _champ4Played = value + " played";
                     NotifyPropertyChanged();
                 }
             }
@@ -518,6 +524,7 @@ namespace ChampRecommender.ViewModel
             {
                 JObject? banPickInfo = null;
                 JObject currentChamp = JObject.Parse(@"{
+                    'line': 0, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
                     'myTeam': {
                         'top': 0,
                         'jungle': 0,
@@ -525,7 +532,8 @@ namespace ChampRecommender.ViewModel
                         'bottom': 0,
                         'utility': 0
                     },
-                    'theirTeam': [0, 0, 0, 0, 0]
+                    'theirTeam': [0, 0, 0, 0, 0],
+                    'ban': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }");
 
                 while (true)
@@ -533,6 +541,19 @@ namespace ChampRecommender.ViewModel
                     banPickInfo = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CHAMP_SELECT_SESSION);
                     if (banPickInfo != null && !banPickInfo.ContainsKey("errorCode"))
                     {
+                        // test
+                        /*
+                        string path = Directory.GetCurrentDirectory();
+                        path = Path.Join(path, "../../../Dataset/response_1682487245967.json");
+                        
+                        using (StreamReader file = File.OpenText(path))
+                        using (JsonTextReader reader = new JsonTextReader(file))
+                        {
+                            banPickInfo = (JObject)JToken.ReadFrom(reader);
+                        }
+                        */
+                        
+
                         bool changed = false;
                         JArray? myTeam = (JArray?)banPickInfo["myTeam"];
                         JArray? theirTeam = (JArray?)banPickInfo["theirTeam"];
@@ -547,18 +568,39 @@ namespace ChampRecommender.ViewModel
                                 }
                             }
                         }
+
+                        pickPhase = new JArray(pickPhase.OrderBy(obj => (int)obj["actorCellId"]));
                         
+                        if (banPhase != null)
+                        {
+                            foreach (var item in banPhase.Select((value, index) => (value, index)))
+                            {
+                                var value = item.value;
+                                var index = item.index;
+
+                                currentChamp["ban"][index] = value["championId"].ToString();
+                            }
+                        }
+
                         if (myTeam != null)
                         {
-                            foreach (var item in myTeam.Select((value, index) => (value, index)))
+                            foreach (var cell in myTeam)
                             {
-                                int index = item.index;
-                                var cell = item.value;
-                                string? curChamp = currentChamp["myTeam"][cell["assignedPosition"]].ToString();
-                                string? newChamp = cell["championId"].ToString();
-                                if (curChamp != newChamp && pickPhase[index]["completed"].ToString() == "true")
+                                if (cell["puuid"].ToString() == "0")
                                 {
-                                    currentChamp["myTeam"][cell["assignedPosition"]] = Convert.ToInt32(newChamp);
+                                    string pos = cell["assignedPosition"].ToString();
+                                    if (pos == "top") currentChamp["line"] = 0;
+                                    if (pos == "jungle") currentChamp["line"] = 1;
+                                    if (pos == "middle") currentChamp["line"] = 2;
+                                    if (pos == "bottom") currentChamp["line"] = 3;
+                                    if (pos == "utility") currentChamp["line"] = 4;
+                                } 
+                                int index = Convert.ToInt32(cell["cellId"].ToString());
+                                string? curChamp = currentChamp["myTeam"][cell["assignedPosition"].ToString()].ToString();
+                                string? newChamp = cell["championId"].ToString();
+                                if (curChamp != newChamp && pickPhase[index]["completed"].ToString() == "True")
+                                {
+                                    currentChamp["myTeam"][cell["assignedPosition"].ToString()] = Convert.ToInt32(newChamp);
                                     changed = true;
                                 }
                             }
@@ -566,16 +608,14 @@ namespace ChampRecommender.ViewModel
 
                         if (theirTeam != null)
                         {
-                            foreach(var item in theirTeam.Select((value, index) => (value, index)))
+                            foreach(var cell in theirTeam)
                             {
-                                int index = item.index;
-                                int cellNum = index + 5;
-                                var cell = item.value;
+                                int index = Convert.ToInt32(cell["cellId"].ToString());
                                 string? curChamp = ((JArray?)currentChamp["theirTeam"])[index].ToString();
                                 string? newChamp = cell["championId"].ToString();
-                                if (curChamp != newChamp && pickPhase[cellNum]["completed"].ToString() == "true")
+                                if (curChamp != newChamp && pickPhase[index]["completed"].ToString() == "True")
                                 {
-                                    currentChamp["theirTeam"][index] = Convert.ToInt32(newChamp);
+                                    currentChamp["theirTeam"][index >= 5 ? index - 5: index] = Convert.ToInt32(newChamp);
                                     changed = true;
                                 }
                             }
@@ -584,7 +624,8 @@ namespace ChampRecommender.ViewModel
                         if (changed)
                         {
                             JArray recommendation = await ServerManager.getRecommendation(currentChamp);
-                            setRecommendation(recommendation);
+                            Trace.WriteLine(recommendation.ToString());
+                            await setRecommendation(recommendation);
                         }
                     }
                     await Task.Delay(1000);
@@ -596,42 +637,46 @@ namespace ChampRecommender.ViewModel
             }
         }
 
-        private void setRecommendation(JArray recommendations)
+        private async Task setRecommendation(JArray recommendations)
         {
-            foreach(var item in recommendations.Select((value, index) => (value, index)))
+            JArray JpickableChamp = await RiotCLUManager.UsingApiEventJArray(APIMethod.GET, APIEndpoint.PICKABLE_CHAMP_IDS);
+            List<int> pickableChamp = JpickableChamp.ToObject<List<int>>();
+            int index = 0;
+            foreach(var recommendation in recommendations)
             {
-                int index = item.index;
-                var recommendation = item.value;
-                Champion? champ = Champions.GetChampionById(Convert.ToInt32(recommendation["champ"]));
+                int champId = Convert.ToInt32(recommendation["id"]);
+                if (!pickableChamp.Contains(champId)) continue;
+                Champion? champ = Champions.GetChampionById(champId);
                 if (champ != null)
                 {
                     if (index == 0)
                     {
                         champ0Name = champ.Name;
-                        champ0WinRate = recommendation["winRate"].ToString();
+                        champ0WinRate = recommendation["winrate"].ToString();
                         champ0Played = "";
                         champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
                     } else if (index == 1) {
                         champ1Name = champ.Name;
-                        champ1WinRate = recommendation["winRate"].ToString();
+                        champ1WinRate = recommendation["winrate"].ToString();
                         champ1Played = "";
                         champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
                     } else if (index == 2) {
                         champ2Name = champ.Name;
-                        champ2WinRate = recommendation["winRate"].ToString();
+                        champ2WinRate = recommendation["winrate"].ToString();
                         champ2Played = "";
                         champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
                     } else if (index == 3) {
                         champ3Name = champ.Name;
-                        champ3WinRate = recommendation["winRate"].ToString();
+                        champ3WinRate = recommendation["winrate"].ToString();
                         champ3Played = "";
                         champ3Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ3Name);
                     } else if (index == 4) {
                         champ4Name = champ.Name;
-                        champ4WinRate = recommendation["winRate"].ToString();
+                        champ4WinRate = recommendation["winrate"].ToString();
                         champ4Played = "";
                         champ4Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ4Name);
                     }
+                    index++;
                 }
             }
         }

@@ -28,6 +28,8 @@ namespace ChampRecommender.Models
 
         public const string ACS_CURRENT_USER = "/lol-acs/v2/recently-played-champions/current-summoner";
 
+        public const string PICKABLE_CHAMP_IDS = "/lol-champ-select/v1/pickable-champion-ids";
+
         public static string CURRENT_SUMMONER_TIER(string puuid)
         {
             return String.Format("/lol-ranked/v1/ranked-stats/{0}", puuid);
