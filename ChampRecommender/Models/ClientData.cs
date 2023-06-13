@@ -23,6 +23,6 @@ namespace ChampRecommender.Models
 
     class ServerData
     {
-        public static string ServerUrl = "https://mobilex.kr/ai/dev/team12/post_test";
+        public static string ServerUrl = "https://mobilex.kr/ai/dev/team2/predict";
     }
 }
