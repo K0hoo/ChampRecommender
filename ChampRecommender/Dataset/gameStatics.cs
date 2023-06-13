@@ -33,7 +33,8 @@ namespace ChampRecommender.Dataset
         public static async Task initGameStatics(string puuid) 
         {
             JArray games = await RiotCLUManager.UsingApiEventJArray(APIMethod.GET, APIEndpoint.CAREER_STATS_SUMMONER(puuid));
-            
+            if (games == null) return;
+
             List<List<JObject>> classifiedGames = new List<List<JObject>>();
             List<int> checkedChampions = new List<int>();
 
@@ -113,7 +114,7 @@ namespace ChampRecommender.Dataset
                 default: break;
             }
 
-            winRate = winCount * 100 / gameCount;
+            winRate = gameCount!=0 ? winCount * 100 / gameCount : 0;
 
             int lenList = checkedChampions.Count;
             champStats = new List<ChampionStatics>(lenList);
