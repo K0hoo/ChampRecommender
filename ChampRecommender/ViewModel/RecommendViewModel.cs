@@ -223,7 +223,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ0WinRate != value)
                 {
-                    _champ0WinRate = value + "%";
+                    if (value == "") _champ0WinRate = value;
+                    else _champ0WinRate = value + "%";
                     NotifyPropertyChanged();
                 }
             }
@@ -236,7 +237,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ1WinRate != value)
                 {
-                    _champ1WinRate = value + "%";
+                    if (value == "") _champ1WinRate = value;
+                    else _champ1WinRate = value + "%";
                     NotifyPropertyChanged();
                 }
             }
@@ -249,7 +251,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ2WinRate != value)
                 {
-                    _champ2WinRate = value + "%";
+                    if (value == "") _champ2WinRate = value;
+                    else _champ2WinRate = value + "%";
                     NotifyPropertyChanged();
                 }
             }
@@ -262,7 +265,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ3WinRate != value)
                 {
-                    _champ3WinRate = value + "%";
+                    if (value == "") _champ3WinRate = value;
+                    else _champ3WinRate = value + "%";
                     NotifyPropertyChanged();
                 }
             }
@@ -275,7 +279,8 @@ namespace ChampRecommender.ViewModel
             {
                 if (_champ4WinRate != value)
                 {
-                    _champ4WinRate = value + "%";
+                    if (value == "") _champ4WinRate = value;
+                    else _champ4WinRate = value + "%";
                     NotifyPropertyChanged();
                 }
             }
@@ -524,7 +529,7 @@ namespace ChampRecommender.ViewModel
             {
                 JObject? banPickInfo = null;
                 JObject currentChamp = JObject.Parse(@"{
-                    'line': 0, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
+                    'line': 4, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
                     'myTeam': {
                         'top': 0,
                         'jungle': 0,
@@ -586,14 +591,14 @@ namespace ChampRecommender.ViewModel
                         {
                             foreach (var cell in myTeam)
                             {
-                                if (cell["puuid"].ToString() == "0")
+                                if (cell["puuid"].ToString() != "")
                                 {
                                     string pos = cell["assignedPosition"].ToString();
-                                    if (pos == "top") currentChamp["line"] = 0;
-                                    if (pos == "jungle") currentChamp["line"] = 1;
-                                    if (pos == "middle") currentChamp["line"] = 2;
-                                    if (pos == "bottom") currentChamp["line"] = 3;
-                                    if (pos == "utility") currentChamp["line"] = 4;
+                                    if (pos == "top") currentChamp["line"] = 1;
+                                    if (pos == "jungle") currentChamp["line"] = 2;
+                                    if (pos == "middle") currentChamp["line"] = 3;
+                                    if (pos == "bottom") currentChamp["line"] = 4;
+                                    if (pos == "utility") currentChamp["line"] = 5;
                                 } 
                                 int index = Convert.ToInt32(cell["cellId"].ToString());
                                 string? curChamp = currentChamp["myTeam"][cell["assignedPosition"].ToString()].ToString();
@@ -611,7 +616,7 @@ namespace ChampRecommender.ViewModel
                             foreach(var cell in theirTeam)
                             {
                                 int index = Convert.ToInt32(cell["cellId"].ToString());
-                                string? curChamp = ((JArray?)currentChamp["theirTeam"])[index].ToString();
+                                string? curChamp = ((JArray?)currentChamp["theirTeam"])[index >= 5 ? index - 5 : index].ToString();
                                 string? newChamp = cell["championId"].ToString();
                                 if (curChamp != newChamp && pickPhase[index]["completed"].ToString() == "True")
                                 {
@@ -623,8 +628,8 @@ namespace ChampRecommender.ViewModel
 
                         if (changed)
                         {
+                            Trace.WriteLine(currentChamp.ToString());
                             JArray recommendation = await ServerManager.getRecommendation(currentChamp);
-                            Trace.WriteLine(recommendation.ToString());
                             await setRecommendation(recommendation);
                         }
                     }
@@ -639,42 +644,44 @@ namespace ChampRecommender.ViewModel
 
         private async Task setRecommendation(JArray recommendations)
         {
-            JArray JpickableChamp = await RiotCLUManager.UsingApiEventJArray(APIMethod.GET, APIEndpoint.PICKABLE_CHAMP_IDS);
-            List<int> pickableChamp = JpickableChamp.ToObject<List<int>>();
+            // JArray JpickableChamp = await RiotCLUManager.UsingApiEventJArray(APIMethod.GET, APIEndpoint.PICKABLE_CHAMP_IDS);
+            // List<int> pickableChamp = JpickableChamp.ToObject<List<int>>();
+            Trace.WriteLine(recommendations.ToString());
             int index = 0;
             foreach(var recommendation in recommendations)
             {
-                int champId = Convert.ToInt32(recommendation["id"]);
-                if (!pickableChamp.Contains(champId)) continue;
+                // int champId = Convert.ToInt32(recommendation["id"]);
+                // if (!pickableChamp.Contains(champId)) continue;
+                int champId = Convert.ToInt32(recommendation);
                 Champion? champ = Champions.GetChampionById(champId);
                 if (champ != null)
                 {
                     if (index == 0)
                     {
                         champ0Name = champ.Name;
-                        champ0WinRate = recommendation["winrate"].ToString();
+                        champ0WinRate = "";
                         champ0Played = "";
                         champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
                     } else if (index == 1) {
                         champ1Name = champ.Name;
-                        champ1WinRate = recommendation["winrate"].ToString();
+                        champ1WinRate = "";
                         champ1Played = "";
                         champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
                     } else if (index == 2) {
                         champ2Name = champ.Name;
-                        champ2WinRate = recommendation["winrate"].ToString();
+                        champ2WinRate = "";
                         champ2Played = "";
                         champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
                     } else if (index == 3) {
                         champ3Name = champ.Name;
-                        champ3WinRate = recommendation["winrate"].ToString();
+                        champ3WinRate = "";
                         champ3Played = "";
-                        champ3Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ3Name);
+                        champ3Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ3Name);
                     } else if (index == 4) {
                         champ4Name = champ.Name;
-                        champ4WinRate = recommendation["winrate"].ToString();
+                        champ4WinRate = "";
                         champ4Played = "";
-                        champ4Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ4Name);
+                        champ4Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ4Name);
                     }
                     index++;
                 }

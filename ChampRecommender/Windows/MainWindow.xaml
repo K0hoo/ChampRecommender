@@ -14,7 +14,7 @@
         MouseDown="Window_MouseDown"
         >
     <Window.Background>
-        <ImageBrush ImageSource="/Windows/MSI23_Announcement_Header_57.png" Opacity="0.5"></ImageBrush>
+        <ImageBrush ImageSource="/Windows/DRX-Worlds-Winners-2022.jpg" Opacity="0.5"></ImageBrush>
     </Window.Background>
     <Grid>
         <Button 
