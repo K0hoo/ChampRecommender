@@ -52,15 +52,17 @@ namespace ChampRecommender.Windows
         private async void communicateTest(object sender, RoutedEventArgs e)
         {
             JObject currentChamp = JObject.Parse(@"{
-                    'myTeam': {
-                        'top': 0,
-                        'jungle': 0,
-                        'middle': 0,
-                        'bottom': 0,
-                        'utility': 0
-                    },
-                    'theirTeam': [0, 0, 0, 0, 0]
-                }");
+                'line': 1, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
+                'myTeam': {
+                    'top': 0,
+                    'jungle': 254,
+                    'middle': 7,
+                    'bottom': 81,
+                    'utility': 497
+                },
+                'theirTeam': [79, 518, 91, 29, 497],
+                'ban': [0, 0, 516, 0, 240, 0, 0, 0, 0, 0]
+            }");
             JArray result = await ServerManager.getRecommendation(currentChamp);
             Trace.WriteLine(result.ToString());
         }
