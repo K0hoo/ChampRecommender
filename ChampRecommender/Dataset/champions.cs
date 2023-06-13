@@ -12,6 +12,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Net;
 
 namespace ChampRecommender.Dataset
 {
@@ -24,13 +26,36 @@ namespace ChampRecommender.Dataset
         {
             champions = new List<Champion>();
 
-            string path = "./champions.json";
-
             for (int i = 0; i < 5; ++i)
             {
                 champByLane.Add(new List<int>());
             }
 
+            List<string> names = ChampionList.names;
+            List<int> ids = ChampionList.ids;
+            List<List<string>> lanes = ChampionList.lanes;
+
+            int champCnt = names.Count;
+
+            for  (int i = 0;i < champCnt; ++i)
+            {
+                foreach(string lane in lanes[i])
+                {
+                    if (lane == Lane.TOP) champByLane[0].Add(ids[i]);
+                    else if (lane == Lane.JUNGLE) champByLane[1].Add(ids[i]);
+                    else if (lane == Lane.MID) champByLane[2].Add(ids[i]);
+                    else if (lane == Lane.BOTTOM) champByLane[3].Add(ids[i]);
+                    else if (lane == Lane.SUPPORT) champByLane[4].Add(ids[i]);
+                }
+
+                champions.Add(new Champion
+                {
+                    Name = names[i],
+                    Id = ids[i],
+                    Lanes = lanes[i],
+                });
+            }
+            /*
             using (StreamReader file = File.OpenText(path))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
@@ -61,6 +86,7 @@ namespace ChampRecommender.Dataset
                     
                 }
             }
+            */
         }
 
         public static void initChampions()

@@ -12,3 +12,5 @@ ChampRecommender/Properties
 champion.ipynb
 ChampRecommender/Windows/orignal_champion/*.jpg
 ChampRocommenderInstaller
+ChampRecommender/Dataset/*.json
+ChampRecommender/Dataset/*.ipynb
