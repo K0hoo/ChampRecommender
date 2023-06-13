@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 		readme.MD = readme.MD
 	EndProjectSection
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ChampRocommenderInstaller", "ChampRocommenderInstaller\ChampRocommenderInstaller.vdproj", "{5E5DC0B9-64CE-4CD4-B93F-E8F1C71909A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,8 @@ Global
 		{9144318A-4A58-4451-B038-A32DDBFEDE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9144318A-4A58-4451-B038-A32DDBFEDE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9144318A-4A58-4451-B038-A32DDBFEDE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5DC0B9-64CE-4CD4-B93F-E8F1C71909A1}.Debug|Any CPU.ActiveCfg = Debug
+		{5E5DC0B9-64CE-4CD4-B93F-E8F1C71909A1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
