@@ -1,9 +1,7 @@
-# lolhelper 사용법
-
-
+# LoLhelper 사용법
 
 1) github에서 LoLhelper를 다운받아서 내 컴퓨터에 저장합니다. 
-<a href="https://github.com/K0hoo/ChampRecommender/blob/master/LoLhelper.zip" download>Click to Download</a>
+<a href="https://github.com/K0hoo/ChampRecommender/raw/master/LoLhelper.zip" download>Click to Download</a>
 
 1) lolclient를 켠 다음 로그인을 합니다.
 
