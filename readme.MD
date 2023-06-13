@@ -3,15 +3,15 @@
 
 
 1) github에서 LoLhelper를 다운받아서 내 컴퓨터에 저장합니다. 
-<a href="https://github.com/K0hoo/ChampRecommender/blob/master/LoLhelper.zip" download="true" download>Click to Download</a>
+<a href="https://github.com/K0hoo/ChampRecommender/blob/master/LoLhelper.zip" download="true">Click to Download</a>
 
-2) lolclient를 켠 다음 로그인을 합니다.
+1) lolclient를 켠 다음 로그인을 합니다.
 
-3) LoLhelper내에 ChampRecommender를 클릭하여 실행합니다.
+2) LoLhelper내에 ChampRecommender를 클릭하여 실행합니다.
 
-4) LoL rank게임을 실행합니다.
+3) LoL rank게임을 실행합니다.
 
-5) ChampRecommender가 추천해주는 챔피언을 참고해서 게임을 즐깁니다.
+4) ChampRecommender가 추천해주는 챔피언을 참고해서 게임을 즐깁니다.
 
 # ※ 주의사항
 
