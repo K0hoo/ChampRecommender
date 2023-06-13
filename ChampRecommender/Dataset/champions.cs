@@ -11,6 +11,7 @@ using System.Data.SQLite;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace ChampRecommender.Dataset
 {
@@ -22,10 +23,8 @@ namespace ChampRecommender.Dataset
         static Champions() 
         {
             champions = new List<Champion>();
-            
 
-            string path = Directory.GetCurrentDirectory();
-            path = Path.Join(path, "../../../Dataset/champions.json");
+            string path = "./champions.json";
 
             for (int i = 0; i < 5; ++i)
             {
