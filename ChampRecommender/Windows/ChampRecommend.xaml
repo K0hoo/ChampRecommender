@@ -222,7 +222,6 @@
                 Foreground="FloralWhite" FontWeight="Heavy" FontSize="20"
                 VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0"
                 />
-            <Button Click="communicateTest">click!</Button>
         </StackPanel>
     </Grid>
 </Page>
