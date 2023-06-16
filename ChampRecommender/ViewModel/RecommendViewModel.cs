@@ -598,7 +598,7 @@ namespace ChampRecommender.ViewModel
                 int userCellID = 0;
                 string[] laneByID = { "", "", "", "", "", "", "", "", "", "" }; // cell id 별 포지션 우리팀 top 1, jug 2, mid 3, bot 4, sup 5, 적팀 순서대로 6 7 8 9 10
 
-                /* For Test
+                // For Test
                 string path = Directory.GetCurrentDirectory();
                 path = Path.Join(path, "../../../../Dataset/banpick_info_example.json");
 
@@ -606,11 +606,11 @@ namespace ChampRecommender.ViewModel
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
                     banPickInfo = (JObject)JToken.ReadFrom(reader);
-                } */
+                }
 
                 while (true)
                 {
-                    banPickInfo = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CHAMP_SELECT_SESSION);
+                    // banPickInfo = await RiotCLUManager.UsingApiEventJObject(APIMethod.GET, APIEndpoint.CHAMP_SELECT_SESSION);
                     if (banPickInfo != null && !banPickInfo.ContainsKey("errorCode"))
                     {
                         JArray? actions = (JArray?)banPickInfo["actions"];
@@ -723,7 +723,7 @@ namespace ChampRecommender.ViewModel
                             await setRecommendation(recommendation);
                         }
                     }
-                    await Task.Delay(1000);
+                    await Task.Delay(10000);
                 }
             }
             catch (Exception ex)
@@ -753,27 +753,27 @@ namespace ChampRecommender.ViewModel
                         champ0Name = champ.Name;
                         champ0WinRate = "";
                         champ0Played = "";
-                        champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ0Name);
+                        champ0Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ.Name);
                     } else if (index == 1) {
                         champ1Name = champ.Name;
                         champ1WinRate = "";
                         champ1Played = "";
-                        champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ1Name);
+                        champ1Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ.Name);
                     } else if (index == 2) {
                         champ2Name = champ.Name;
                         champ2WinRate = "";
                         champ2Played = "";
-                        champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ2Name);
+                        champ2Image = String.Format("/Windows/crop_champion/{0}_0.jpg", champ.Name);
                     } else if (index == 3) {
-                        champ3Name = champ.Name;
+                        champ3Name = "";
                         champ3WinRate = "";
                         champ3Played = "";
-                        champ3Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ3Name);
+                        champ3Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ.Name);
                     } else if (index == 4) {
-                        champ4Name = champ.Name;
+                        champ4Name = "";
                         champ4WinRate = "";
                         champ4Played = "";
-                        champ4Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ4Name);
+                        champ4Image = String.Format("/Windows/_crop_champion/{0}_0.jpg", champ.Name);
                     }
                     index++;
                 }

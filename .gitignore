@@ -14,3 +14,5 @@ ChampRecommender/Windows/orignal_champion/*.jpg
 ChampRocommenderInstaller
 ChampRecommender/Dataset/*.json
 ChampRecommender/Dataset/*.ipynb
+ChampRecommender/Windows/daen.zip
+ChampRecommender/Windows/_crop_champion_legacy
