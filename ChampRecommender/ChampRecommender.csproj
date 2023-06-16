@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Windows\_main_champion\**" />
+    <EmbeddedResource Remove="Windows\_main_champion\**" />
+    <None Remove="Windows\_main_champion\**" />
+    <Page Remove="Windows\_main_champion\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Dataset\champions.json" />
     <None Remove="Windows\Aatrox_0.jpg" />
     <None Remove="Windows\Ahri_0.jpg" />
@@ -268,6 +275,15 @@
     <None Remove="Windows\l_MID.png" />
     <None Remove="Windows\l_SUPPORT.png" />
     <None Remove="Windows\l_TOP.png" />
+    <None Remove="Windows\main_champion\Aatrox_0.jpg" />
+    <None Remove="Windows\main_champion\Ahri_0.jpg" />
+    <None Remove="Windows\main_champion\Akali_0.jpg" />
+    <None Remove="Windows\main_champion\Akshan_0.jpg" />
+    <None Remove="Windows\main_champion\Alistar_0.jpg" />
+    <None Remove="Windows\main_champion\Amumu_0.jpg" />
+    <None Remove="Windows\main_champion\Anivia_0.jpg" />
+    <None Remove="Windows\main_champion\Jax_0.jpg" />
+    <None Remove="Windows\main_champion\Teemo_0.jpg" />
     <None Remove="Windows\Malphite_0.jpg" />
     <None Remove="Windows\Malzahar_0.jpg" />
     <None Remove="Windows\Maokai_0.jpg" />
@@ -721,11 +737,21 @@
     <Resource Include="Windows\crop_champion\Zoe_0.jpg" />
     <Resource Include="Windows\crop_champion\Zyra_0.jpg" />
     <Resource Include="Windows\DRX-Worlds-Winners-2022.jpg" />
+    <Resource Include="Windows\Jax_0.jpg" />
     <Resource Include="Windows\l_BOTTOM.png" />
     <Resource Include="Windows\l_JUNGLE.png" />
     <Resource Include="Windows\l_MID.png" />
     <Resource Include="Windows\l_SUPPORT.png" />
     <Resource Include="Windows\l_TOP.png" />
+    <Resource Include="Windows\main_champion\Aatrox_0.jpg" />
+    <Resource Include="Windows\main_champion\Ahri_0.jpg" />
+    <Resource Include="Windows\main_champion\Akali_0.jpg" />
+    <Resource Include="Windows\main_champion\Akshan_0.jpg" />
+    <Resource Include="Windows\main_champion\Alistar_0.jpg" />
+    <Resource Include="Windows\main_champion\Amumu_0.jpg" />
+    <Resource Include="Windows\main_champion\Anivia_0.jpg" />
+    <Resource Include="Windows\main_champion\Jax_0.jpg" />
+    <Resource Include="Windows\main_champion\Teemo_0.jpg" />
     <Resource Include="Windows\MSI23_Announcement_Header_57.png" />
     <Resource Include="Windows\_crop_champion\Aatrox_0.jpg" />
     <Resource Include="Windows\_crop_champion\Ahri_0.jpg" />

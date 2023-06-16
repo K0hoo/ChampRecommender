@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using OpenQA.Selenium;
 
 namespace ChampRecommender.ViewModel
 {
@@ -22,6 +23,7 @@ namespace ChampRecommender.ViewModel
         {
             try
             {
+                
                 HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
                 JObject responseJson = JObject.Parse(await response.Content.ReadAsStringAsync());
                 return responseJson;
@@ -36,8 +38,16 @@ namespace ChampRecommender.ViewModel
         {
             try
             {
+                JArray responseJsonArray;
                 HttpResponseMessage response = await UsingApiEventHttpMessage(method, endpoint, data);
-                JArray responseJsonArray = JArray.Parse(await response.Content.ReadAsStringAsync());
+                string responseContent = await response.Content.ReadAsStringAsync();
+                if (!responseContent.StartsWith('{') && !responseContent.StartsWith('[')) {
+                    responseJsonArray = JArray.Parse(String.Format("[{0}]", responseContent));
+                }
+                else
+                {
+                    responseJsonArray = JArray.Parse(await response.Content.ReadAsStringAsync());
+                }
                 return responseJsonArray;
             }
             catch (Exception ex)
@@ -69,6 +79,7 @@ namespace ChampRecommender.ViewModel
     static class ServerManager
     {
         static public HttpClient? httpServer = null;
+        static public HttpClient? httpResultClient = null;
 
         public static async Task<JArray> getRecommendation(object? data)
         {
@@ -77,6 +88,21 @@ namespace ChampRecommender.ViewModel
             HttpResponseMessage response = await httpServer.PostAsync("", new StringContent(json, Encoding.UTF8, "application/json"));
             JArray responseJson = JArray.Parse(await response.Content.ReadAsStringAsync());
             return responseJson;
+        }
+
+        public static async Task<bool> sendGameResult(object? data)
+        {
+            try
+            {
+                var json = data == null ? "" : JsonConvert.SerializeObject(data);
+
+                HttpResponseMessage response = await httpResultClient.PostAsync("", new StringContent(json, Encoding.UTF8, "application/json"));
+                return true;
+            }
+            catch 
+            { 
+                return false;
+            }
         }
     }
 }

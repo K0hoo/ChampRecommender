@@ -50,21 +50,45 @@ namespace ChampRecommender.Windows
         }
 
         private async void communicateTest(object sender, RoutedEventArgs e)
-        {
-            JObject currentChamp = JObject.Parse(@"{
-                'line': 1, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
+        { 
+            /*JObject currentChamp = JObject.Parse(@"{
+                'line': 4, // top: 1, jungle: 2, mid: 3, bottom: 4, utility: 5
                 'myTeam': {
-                    'top': 0,
-                    'jungle': 254,
-                    'middle': 7,
-                    'bottom': 81,
-                    'utility': 497
+                    'top': 54,
+                    'jungle': 57,
+                    'middle': 127,
+                    'bottom': 0,
+                    'utility': 117
                 },
-                'theirTeam': [79, 518, 91, 29, 497],
-                'ban': [0, 0, 516, 0, 240, 0, 0, 0, 0, 0]
+                'theirTeam': [897, 64, 7, 429, 89],
+                'ban': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                'most_champion': [],
+                'possible_champion': []
             }");
+
+            championStatics = gameStatics.GetChampionStatics();
+
+            JArray most = new JArray();
+
+            foreach (var champion in championStatics)
+            {
+                JObject mostchamp = new JObject();
+                mostchamp.Add(new JProperty("id", champion.GetChampion().Id));
+                mostchamp.Add(new JProperty("games", champion.getCount()));
+                mostchamp.Add(new JProperty("winrate", champion.getWinRate()));
+                most.Add(mostchamp);
+            }
+
+            currentChamp["most_champion"] = most;
+
+            JArray? pickableChampion = await RiotCLUManager.UsingApiEventJArray(APIMethod.GET, APIEndpoint.PICKABLE_CHAMP_IDS);
+            if (pickableChampion != null) currentChamp["possible_champion"] = pickableChampion;
+
             JArray result = await ServerManager.getRecommendation(currentChamp);
-            Trace.WriteLine(result.ToString());
+            Trace.WriteLine(result.ToString());*/
+
+
+            await recommendViewModel.sendGameResult(10);
         }
     }
 }

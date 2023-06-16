@@ -20,6 +20,7 @@ namespace ChampRecommender.ViewModel
         public event LeagueClosedHandler LeagueClosed;
         private HttpClient? httpClient = null;
         private HttpClient? httpServer = null;
+        private HttpClient? httpResultServer = null;
         
         public ClientViewModel() 
         {
@@ -62,6 +63,11 @@ namespace ChampRecommender.ViewModel
                 httpServer.BaseAddress = new Uri(ServerData.ServerUrl);
 
                 ServerManager.httpServer = httpServer;
+
+                httpResultServer.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpResultServer.BaseAddress = new Uri(ServerData.ServerResultUrl);
+
+                ServerManager.httpResultClient = httpResultServer;
             }
             catch 
             {
@@ -82,11 +88,17 @@ namespace ChampRecommender.ViewModel
         public void ServerConnectInit()
         {
             this.httpServer = null;
+            this.httpResultServer = null;
             var handler = new HttpClientHandler();
             handler.ClientCertificateOptions= ClientCertificateOption.Manual;
             handler.ServerCertificateCustomValidationCallback =
                 (HttpResponseMessage, cert, cetChain, policyErrors) => { return true; };
             httpServer = new HttpClient(handler);
+            handler = new HttpClientHandler();
+            handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+            handler.ServerCertificateCustomValidationCallback =
+                (HttpResponseMessage, cert, cetChain, policyErrors) => { return true; };
+            httpResultServer = new HttpClient(handler);
         }
 
         public bool CheckClientOn()

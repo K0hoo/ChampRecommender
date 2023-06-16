@@ -24,5 +24,7 @@ namespace ChampRecommender.Models
     class ServerData
     {
         public static string ServerUrl = "https://mobilex.kr/ai/dev/team2/predict";
+
+        public static string ServerResultUrl = "https://mobilex.kr/ai/dev/team2/endgame";
     }
 }

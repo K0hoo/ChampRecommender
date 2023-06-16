@@ -30,6 +30,8 @@ namespace ChampRecommender.Models
 
         public const string PICKABLE_CHAMP_IDS = "/lol-champ-select/v1/pickable-champion-ids";
 
+        public const string GAMEFLOW_PHASE = "/lol-gameflow/v1/gameflow-phase";
+
         public static string CURRENT_SUMMONER_TIER(string puuid)
         {
             return String.Format("/lol-ranked/v1/ranked-stats/{0}", puuid);
