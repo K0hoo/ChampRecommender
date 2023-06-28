@@ -22,7 +22,7 @@
 
 ### 1) System Flow
 
-![systemflow](./docs_img/system_flow.jpg)
+![systemflow](./docs/img/system_flow.jpg)
 
 1. LoLhelper를 실행하면 롤 클라이언트가 감지될 때까지 LoadingPage에서 대기합니다.
 2. 롤 클라이언트가 실행되면 해당 프로세스를 감지하고, 사용자가 로그인 하면 LobbyPage로 이동하여 사용자 정보를 보여줍니다.
@@ -36,7 +36,7 @@
 
 ### 2) System Architecture
 
-![systemarchitecture](./docs_img/KakaoTalk_20230608_124613896.png)
+![systemarchitecture](./docs/img/KakaoTalk_20230608_124613896.png)
 
 LoLhelper는 롤 클라이언트 프로세스 및 HPC 서버와 통신하도록 설계되었습니다. LoLhelper의 목표는 게임내의 밴픽현황을 통해서 챔피언을 추천하는 것입니다. 따라서 롤 클라이언트에서 해당 사용자의 정보 및 백/픽 상황을 받고 이를 HPC 서버에 전송해서 챔피언을 추천하도록 구성하였습니다. 제안된 시스템에서 HPC 서버는 Flask 프레임워크를 통해서 개발하였으며 롤 클라이언트로부터 얻은 정보를 토대로 챔피언을 추천하여 전송합니다. 딥러닝 서버를 별도로 구축함으로써 사용자가 프로그램을 사용하기위한 접근성을 낮췄으며, 사용자로부터 얻은 정보를 수집할 수 있도록 하였습니다.
 
@@ -102,21 +102,21 @@ OP.GG에서는 게임 기록을 탑, 정글, 미드, 원딜, 서폿 순으로 �
 
 ### 2) Data Preparation
 
-![crawling1](./docs_img/crawling1.png)
+![crawling1](./docs/img/crawling1.png)
 
 수집한 데이터는 다시 한번 전처리 과정을 통해서 학습에 사용하였습니다. 데이터는 tier, result, enemy1 ~ enemy5, top, jg, mid, ad, sup 순으로 수집되었습니다. 데이터는 승리, 패배 두 가지 경우에 대해서 모두 수집되었기 때문에 학습을 위해서는 승리 결과에 대한 데이터로 만들어줘야했습니다. 따라서 패배한 게임 기록에 대해서는 enemy1 ~ enemy5와 top ~ sup의 챔피언의 정보를 바꿔주어서 패배에 대한 데이터를 승리에 대한 데이터로 변경해주었습니다.
 
-![crawling2](./docs_img/crawling2.png)
+![crawling2](./docs/img/crawling2.png)
 
 우리 팀의 모델의 입력은 적 챔피언 5개, 아군 챔피언 5개의 순으로 벡터를 구성해서 들어가게 됩니다. 따라서 크롤링된 데이터에서 다시 해당 정보만 추출해주었습니다. 그리고 크롤링된 데이터는 챔피언의 이름에 대한 정보로 저장이 되었습니다. 따라서 이를 모델의 학습으로 사용하기 위해서는 챔피언의 이름은 챔피언과 매핑되는 id로 변경해주어서 모델의 입력으로 사용할 수 있게 수정해주었습니다.
 
-![crawling3](./docs_img/crawling3.png)
+![crawling3](./docs/img/crawling3.png)
 
 그리고 모델을 학습하기 위해서는 해당 학습 데이터에 대한 정답 데이터가 쌍으로 존재해야합니다. 자세한 데이터 전처리 결과는 위의 이미지를 참고하세요.
 
 
 ## Model
-![model](./docs_img/model_architecture.png)
+![model](./docs/img/model_architecture.png)
 
 모델은 선형 레이어를 중첩하여 구현되었으며, 학습 과정은 0 벡터에 적절한 챔피언을 선택하는 것으로 이루어집니다. 입력 벡터에서 빨간색으로 표시된 부분은 적 챔피언의 정보를, 파란색으로 표시된 부분은 아군 챔피언의 정보를 나타냅니다. 적 챔피언 정보는 순서에 상관없이 무작위로 들어가고, 아군 정보는 Top, Jungle, Mid, AD, Sup 순서로 입력 벡터에 할당됩니다. 이 방식으로 벡터의 입력 순서 자체가 적과 아군, 그리고 아군의 역할을 암시하는 정보로 작용합니다.
 
